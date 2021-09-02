@@ -17,5 +17,8 @@
         "psr-4": {
             "nuffy\\cards\\": "src"
         }
+    },
+    "scripts":{
+        "update-docs": "php phpDocumentor.phar -d ./src -t ./docs"
     }
 }
