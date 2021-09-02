@@ -1,0 +1,21 @@
+{
+    "name": "nuffy/cards",
+    "description": "Abstraction layer for playing cards",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "NuffZetPand0ra",
+            "email": "esbentind@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "nuffy\\cards\\": "src"
+        }
+    }
+}
