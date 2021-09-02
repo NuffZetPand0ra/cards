@@ -146,7 +146,7 @@ abstract class CardCollection implements \Iterator
     public function drawRemaining() : array
     {
         $remaining_cards = $this->remaining_cards;
-        $this->drawn_cards = array_merge($this->drawn_cards, $this->remaining_cards);
+        $this->drawn_cards = [...$this->drawn_cards, ...$this->remaining_cards];
         $this->remaining_cards = [];
         return $remaining_cards;
     }
@@ -233,7 +233,7 @@ abstract class CardCollection implements \Iterator
 
     public function rewind()
     {
-        $this->remaining_cards = array_merge($this->drawn_cards, $this->remaining_cards);
+        $this->remaining_cards = [...$this->drawn_cards, ...$this->remaining_cards];
         $this->flushDraws();
     }
 
