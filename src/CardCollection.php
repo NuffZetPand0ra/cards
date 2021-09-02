@@ -192,9 +192,9 @@ abstract class CardCollection implements \Iterator
         }else{
             usort($this->remaining_cards, function(CardInterface $a, CardInterface $b){
                 if($a->getSuit()->getValue() == $b->getSuit()->getValue()){
-                    return $a->getRank()->getValue() <=> $b->getRank()->getValue();
+                    return $b->getRank()->getValue() <=> $a->getRank()->getValue();
                 }
-                return $a->getSuit()->getValue() <=> $b->getSuit()->getValue();
+                return $b->getSuit()->getValue() <=> $a->getSuit()->getValue();
             });
         }
         return $this;
