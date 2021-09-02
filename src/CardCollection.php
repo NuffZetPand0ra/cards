@@ -85,6 +85,24 @@ abstract class CardCollection implements \Iterator
     }
 
     /**
+     * Draws multiple cards
+     * 
+     * @param int $amount How many cards to draw
+     * @param int $position Position to draw from
+     * @return CardInterface[] 
+     * @throws DeckException 
+     */
+    public function drawMultiple(int $amount, int $position = 0) : array
+    {
+        if(count($this->remaining_cards) < $this->count() - $amount) throw new DeckException('Not enough cards in collection.');
+        $return = [];
+        for($i = 0; $i < $amount; $i++){
+            $return[] = $this->draw($position);
+        }
+        return $return;
+    }
+
+    /**
      * Returns remaining cards as indexed array
      * 
      * @return CardInterface[]
