@@ -85,6 +85,21 @@ abstract class CardCollection implements \Iterator
     }
 
     /**
+     * Draws specific card if found
+     * 
+     * @param CardInterface $card Card to draw
+     * @return CardInterface 
+     * @throws DeckException 
+     */
+    public function drawSpecific(CardInterface $card) : CardInterface
+    {
+        if($card_to_find = $this->search($card)){
+            return $this->draw($card_to_find);
+        }
+        throw new DeckException("Couldn't find card $card");
+    }
+
+    /**
      * Draws multiple cards
      * 
      * @param int $amount How many cards to draw
