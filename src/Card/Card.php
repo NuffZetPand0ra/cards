@@ -2,7 +2,7 @@
 namespace nuffy\cards\Card;
 
 /** @package nuffy\cards\Card */
-class Card
+class Card implements CardInterface
 {
     /**
      * Creates a new card

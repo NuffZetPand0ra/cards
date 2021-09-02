@@ -2,7 +2,7 @@
 namespace nuffy\cards\Card;
 
 /** @package nuffy\cards\Card */
-class Rank
+class Rank implements RankInterface
 {
     public const RANKS = [
         "2",

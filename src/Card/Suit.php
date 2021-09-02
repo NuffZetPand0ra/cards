@@ -2,7 +2,7 @@
 namespace nuffy\cards\Card;
 
 /** @package nuffy\cards\Card */
-class Suit
+class Suit implements SuitInterface
 {
     public const SUITS = [
         "C",

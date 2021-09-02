@@ -1,7 +1,7 @@
 <?php
 namespace nuffy\cards;
 
-use nuffy\cards\Card\{Card};
+use nuffy\cards\Card\{Card, CardInterface};
 
 /** @package nuffy\cards */
 abstract class CardCollection implements \Iterator
@@ -9,23 +9,23 @@ abstract class CardCollection implements \Iterator
     /**
      * Drawn cards
      * 
-     * @var Card[]
+     * @var CardInterface[]
      */
     protected $drawn_cards = [];
     /**
      * Cards remaining in collection
      * 
-     * @var Card[]
+     * @var CardInterface[]
      */
     protected $remaining_cards = [];
 
     /**
      * Adds a card to the remaining cards in the collection
      * 
-     * @param Card $card 
+     * @param CardInterface $card 
      * @return static 
      */
-    public function addCard(Card $card) : static
+    public function addCard(CardInterface $card) : static
     {
         $this->remaining_cards[] = $card;
 
@@ -35,12 +35,13 @@ abstract class CardCollection implements \Iterator
     /**
      * Add multiple cards to collection.
      * 
-     * @param Card[] $cards 
+     * @param CardInterface[] $cards 
      * @return static 
      */
     public function addCards(array $cards) : static
     {
         foreach($cards as $card){
+            if(!$card instanceof CardInterface) throw new DeckException("Card does not implement CardInterface");
             $this->addCard($card);
         }
 
@@ -67,10 +68,10 @@ abstract class CardCollection implements \Iterator
      * Draws a card from collection
      * 
      * @param int $position What position you want to draw
-     * @return Card 
+     * @return CardInterface 
      * @throws DeckException 
      */
-    public function draw(int $position = 0) : Card
+    public function draw(int $position = 0) : CardInterface
     {
         if(count($this->remaining_cards) === 0) throw new DeckException('There are no cards to draw.');
 
@@ -86,7 +87,7 @@ abstract class CardCollection implements \Iterator
     /**
      * Returns remaining cards as indexed array
      * 
-     * @return Card[]
+     * @return CardInterface[]
      */
     public function getRemainingCards() : array
     {
@@ -96,7 +97,7 @@ abstract class CardCollection implements \Iterator
     /**
      * Returns drawn cards as indexed array
      * 
-     * @return Card[]
+     * @return CardInterface[]
      */
     public function getDrawnCards() : array
     {
@@ -106,7 +107,7 @@ abstract class CardCollection implements \Iterator
     /**
      * Draws and returns remaining cards
      * 
-     * @return Card[]
+     * @return CardInterface[]
      */
     public function drawRemaining() : array
     {
@@ -131,10 +132,10 @@ abstract class CardCollection implements \Iterator
     /**
      * Search for a specific card
      * 
-     * @param Card $card_to_find 
+     * @param CardInterface $card_to_find 
      * @return null|int Card position if found
      */
-    public function search(Card $card_to_find) : ?int
+    public function search(CardInterface $card_to_find) : ?int
     {
         $cards_to_search = array_values($this->remaining_cards);
         foreach($cards_to_search as $i=>$card_in_deck){
@@ -155,7 +156,7 @@ abstract class CardCollection implements \Iterator
         if($sort){
             $sort($this->remaining_cards);
         }else{
-            usort($this->remaining_cards, function(Card $a, Card $b){
+            usort($this->remaining_cards, function(CardInterface $a, CardInterface $b){
                 if($a->getSuit()->getValue() == $b->getSuit()->getValue()){
                     return $a->getRank()->getValue() <=> $b->getRank()->getValue();
                 }
@@ -181,7 +182,7 @@ abstract class CardCollection implements \Iterator
      * Implementation of Traversible
      */
 
-    public function current() : Card
+    public function current() : CardInterface
     {
         return $this->remaining_cards[0];
     }
