@@ -4,7 +4,7 @@ namespace nuffy\cards;
 use nuffy\cards\Card\{Card, CardInterface};
 
 /** @package nuffy\cards */
-abstract class CardCollection implements \Iterator
+abstract class CardCollection implements \Iterator, \Countable
 {
     /**
      * Drawn cards
