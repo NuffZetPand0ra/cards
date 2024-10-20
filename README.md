@@ -2,6 +2,10 @@
 
 ## Dependency-free abstraction layer for handling playing cards and decks/shoes
 
+```sh
+composer require nuffy/cards
+```
+
 Quick and dirty example:
 
 ```php
