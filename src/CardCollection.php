@@ -58,7 +58,7 @@ abstract class CardCollection implements \Iterator, \Countable
     public function addCards(array $cards) : static
     {
         foreach($cards as $card){
-            if(!$card instanceof CardInterface) throw new DeckException("Card does not implement CardInterface");
+            if(!$card instanceof CardInterface) throw new CardCollectionException("Card does not implement CardInterface");
             $this->addCard($card);
         }
 
@@ -86,11 +86,11 @@ abstract class CardCollection implements \Iterator, \Countable
      * 
      * @param int $position What position you want to draw
      * @return CardInterface 
-     * @throws DeckException 
+     * @throws CardCollectionException 
      */
     public function draw(int $position = 0) : CardInterface
     {
-        if(count($this->remaining_cards) === 0) throw new DeckException('There are no cards to draw.');
+        if(count($this->remaining_cards) === 0) throw new CardCollectionException('There are no cards to draw.');
 
         if($position == 0) return $this->drawn_cards[] = array_shift($this->remaining_cards);
 
@@ -106,7 +106,7 @@ abstract class CardCollection implements \Iterator, \Countable
      * 
      * @param CardInterface $card Card to draw
      * @return CardInterface 
-     * @throws DeckException 
+     * @throws CardCollectionException 
      */
     public function drawSpecific(CardInterface $card) : CardInterface
     {
@@ -114,7 +114,7 @@ abstract class CardCollection implements \Iterator, \Countable
         if($card_to_find !== null){
             return $this->draw($card_to_find);
         }
-        throw new DeckException("Couldn't find card $card");
+        throw new CardCollectionException("Couldn't find card $card");
     }
 
     /**
@@ -123,11 +123,11 @@ abstract class CardCollection implements \Iterator, \Countable
      * @param int $amount How many cards to draw
      * @param int $position Position to draw from
      * @return CardInterface[] 
-     * @throws DeckException 
+     * @throws CardCollectionException 
      */
     public function drawMultiple(int $amount, int $position = 0) : array
     {
-        if(count($this->remaining_cards) < $amount + $position) throw new DeckException('Not enough cards in collection.');
+        if(count($this->remaining_cards) < $amount + $position) throw new CardCollectionException('Not enough cards in collection.');
         $return = [];
         for($i = 0; $i < $amount; $i++){
             $return[] = $this->draw($position);

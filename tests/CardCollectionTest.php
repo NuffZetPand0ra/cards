@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Depends;
 use nuffy\cards\CardCollection;
 use nuffy\cards\Card\CardFactory;
-use nuffy\cards\DeckException;
+use nuffy\cards\CardCollectionException;
 use nuffy\cards\ShufflingStrategy\ShufflingStrategyInterface;
 
 class CardCollectionTest extends TestCase
@@ -79,7 +79,7 @@ class CardCollectionTest extends TestCase
         $deck = new class extends CardCollection{};
 
         // Assert
-        $this->expectException(DeckException::class);
+        $this->expectException(CardCollectionException::class);
 
         // Act
         $deck->draw();
@@ -122,7 +122,7 @@ class CardCollectionTest extends TestCase
         $card = CardFactory::createFromString('AH');
 
         // Assert
-        $this->expectException(DeckException::class);
+        $this->expectException(CardCollectionException::class);
 
         // Act
         $deck->drawSpecific($card);
@@ -158,7 +158,7 @@ class CardCollectionTest extends TestCase
         $deck->addCards($cards);
 
         // Assert
-        $this->expectException(DeckException::class);
+        $this->expectException(CardCollectionException::class);
 
         // Act
         $deck->drawMultiple(3);
