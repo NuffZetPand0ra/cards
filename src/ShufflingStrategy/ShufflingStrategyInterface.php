@@ -1,5 +1,5 @@
 <?php
-namespace nuffy\cards;
+namespace nuffy\cards\ShufflingStrategy;
 
 interface ShufflingStrategyInterface
 {

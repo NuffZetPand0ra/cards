@@ -2,7 +2,7 @@
 namespace nuffy\cards;
 
 use nuffy\cards\Card\{Card, Suit, Rank};
-use nuffy\cards\ShufflingStrategyInterface;
+use nuffy\cards\ShufflingStrategy\ShufflingStrategyInterface;
 
 /** @package nuffy\cards */
 class Deck extends CardCollection

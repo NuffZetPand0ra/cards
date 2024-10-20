@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Depends;
 use nuffy\cards\CardCollection;
 use nuffy\cards\Card\CardFactory;
-use nuffy\cards\ShufflingStrategyInterface;
+use nuffy\cards\ShufflingStrategy\ShufflingStrategyInterface;
 
 class CardCollectionTest extends TestCase
 {

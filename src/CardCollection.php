@@ -2,6 +2,7 @@
 namespace nuffy\cards;
 
 use nuffy\cards\Card\{Card, CardInterface};
+use nuffy\cards\ShufflingStrategy\{ShufflingStrategyInterface, DefaultShufflingStrategy};
 
 /** @package nuffy\cards */
 abstract class CardCollection implements \Iterator, \Countable
