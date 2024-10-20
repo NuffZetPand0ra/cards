@@ -30,12 +30,10 @@ class CardTest extends TestCase
         // Act
         $cardRankString = $card->getRank()->getString();
         $cardRankValue = $card->getRank()->getValue();
-        $cardString = (string)$card;
 
         // Assert
         $this->assertEquals('A', $cardRankString);
         $this->assertEquals(12, $cardRankValue);
-        $this->assertStringContainsString('A', $cardString);
     }
 
     public function testCardSuit()
@@ -49,12 +47,54 @@ class CardTest extends TestCase
         $cardSuitString = $card->getSuit()->getString();
         $cardSuitSymbol = $card->getSuit()->getSymbol();
         $cardSuitValue = $card->getSuit()->getValue();
-        $cardString = (string)$card;
 
         // Assert
         $this->assertEquals('H', $cardSuitString);
         $this->assertEquals('♡', $cardSuitSymbol);
         $this->assertEquals(2, $cardSuitValue);
-        $this->assertStringContainsString('♡', $cardString);
+    }
+
+    public function testCardStringRepresentation()
+    {
+        // Arrange
+        $rank = Rank::create('A');
+        $suit = Suit::create('H');
+        $card = new Card($rank, $suit);
+
+        // Act
+        $cardString = (string)$card;
+
+        // Assert
+        $this->assertEquals('A♡', $cardString);
+    }
+
+    public function testCardEquality()
+    {
+        // Arrange
+        $rank1 = Rank::create('A');
+        $suit1 = Suit::create('H');
+        $card1 = new Card($rank1, $suit1);
+
+        $rank2 = Rank::create('A');
+        $suit2 = Suit::create('H');
+        $card2 = new Card($rank2, $suit2);
+
+        // Act & Assert
+        $this->assertTrue($card1 == $card2);
+    }
+
+    public function testCardInequality()
+    {
+        // Arrange
+        $rank1 = Rank::create('A');
+        $suit1 = Suit::create('H');
+        $card1 = new Card($rank1, $suit1);
+
+        $rank2 = Rank::create('K');
+        $suit2 = Suit::create('S');
+        $card2 = new Card($rank2, $suit2);
+
+        // Act & Assert
+        $this->assertFalse($card1 == $card2);
     }
 }
