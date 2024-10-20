@@ -204,17 +204,16 @@ abstract class CardCollection implements \Iterator, \Countable
      */
     public function sort(?callable $sort = null) : static
     {
-        if($sort){
-            $sort($this->remaining_cards);
-        }else{
-            usort($this->remaining_cards, function(CardInterface $a, CardInterface $b){
-                if($a->getSuit()->getValue() == $b->getSuit()->getValue()){
-                    return $b->getRank()->getValue() <=> $a->getRank()->getValue();
-                }
-                return $b->getSuit()->getValue() <=> $a->getSuit()->getValue();
-            });
-        }
+        usort($this->remaining_cards, $sort ?: [$this, 'defaultSort']);
         return $this;
+    }
+
+    private function defaultSort(CardInterface $a, CardInterface $b) : int
+    {
+        if($a->getSuit()->getValue() == $b->getSuit()->getValue()){
+            return $b->getRank()->getValue() <=> $a->getRank()->getValue();
+        }
+        return $b->getSuit()->getValue() <=> $a->getSuit()->getValue();
     }
 
     /**
