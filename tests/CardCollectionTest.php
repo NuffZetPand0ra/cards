@@ -49,7 +49,7 @@ class CardCollectionTest extends TestCase
         $this->assertCount(3, $deck->getRemainingCards());
     }
 
-    #[Depends('testCanAddMultipleCardsToCollection')]
+    #[Depends('testCanAddCardToCollection', 'testCanAddMultipleCardsToCollection')]
     public function testCanShuffleCollection()
     {
         // Arrange
