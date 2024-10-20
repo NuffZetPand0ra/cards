@@ -271,4 +271,103 @@ class CardCollectionTest extends TestCase
         $this->assertEquals(CardFactory::createFromString('3H'), $sortedCards[1]);
         $this->assertEquals(CardFactory::createFromString('2H'), $sortedCards[2]);
     }
+
+    public function testCount()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $deck->addCards([
+            CardFactory::createFromString('AH'),
+            CardFactory::createFromString('2H'),
+            CardFactory::createFromString('3H'),
+        ]);
+
+        // Act
+        $count = $deck->count();
+
+        // Assert
+        $this->assertEquals(3, $count);
+    }
+
+    public function testCurrent()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $card = CardFactory::createFromString('AH');
+        $deck->addCard($card);
+
+        // Act
+        $currentCard = $deck->current();
+
+        // Assert
+        $this->assertSame($card, $currentCard);
+    }
+
+    public function testKey()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $deck->addCards([
+            CardFactory::createFromString('AH'),
+            CardFactory::createFromString('2H'),
+        ]);
+        $deck->draw();
+
+        // Act
+        $key = $deck->key();
+
+        // Assert
+        $this->assertEquals(1, $key);
+    }
+
+    public function testNext()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $deck->addCards([
+            CardFactory::createFromString('AH'),
+            CardFactory::createFromString('2H'),
+        ]);
+
+        // Act
+        $deck->next();
+        $remainingCards = $deck->getRemainingCards();
+
+        // Assert
+        $this->assertCount(1, $remainingCards);
+    }
+
+    public function testRewind()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $deck->addCards([
+            CardFactory::createFromString('AH'),
+            CardFactory::createFromString('2H'),
+        ]);
+        $deck->draw();
+
+        // Act
+        $deck->rewind();
+        $remainingCards = $deck->getRemainingCards();
+
+        // Assert
+        $this->assertCount(2, $remainingCards);
+    }
+
+    public function testValid()
+    {
+        // Arrange
+        $deck = new class extends CardCollection{};
+        $deck->addCard(CardFactory::createFromString('AH'));
+
+        // Act & Assert
+        $this->assertTrue($deck->valid());
+
+        // Draw the only card
+        $deck->draw();
+
+        // Act & Assert
+        $this->assertFalse($deck->valid());
+    }
 }
