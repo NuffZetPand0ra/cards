@@ -18,6 +18,22 @@ abstract class CardCollection implements \Iterator, \Countable
      * @var CardInterface[]
      */
     protected $remaining_cards = [];
+    /**
+     * Shuffling strategy
+     * 
+     * @var ShufflingStrategyInterface
+     */
+    protected $shufflingStrategy;
+
+    /**
+     * Constructor
+     * 
+     * @param ShufflingStrategyInterface|null $shufflingStrategy
+     */
+    public function __construct(ShufflingStrategyInterface $shufflingStrategy = null)
+    {
+        $this->shufflingStrategy = $shufflingStrategy ?: new DefaultShufflingStrategy();
+    }
 
     /**
      * Adds a card to the remaining cards in the collection
@@ -49,7 +65,7 @@ abstract class CardCollection implements \Iterator, \Countable
     }
 
     /**
-     * Shuffles deck (using array_shuffle)
+     * Shuffles deck
      * 
      * @param bool $only_remaining_cards Set this to false to rewind the collection first
      * @return static 
@@ -58,7 +74,7 @@ abstract class CardCollection implements \Iterator, \Countable
     {
         if(!$only_remaining_cards) $this->rewind();
 
-        \shuffle($this->remaining_cards);
+        $this->shufflingStrategy->shuffle($this->remaining_cards);
         $this->rewind();
 
         return $this;
