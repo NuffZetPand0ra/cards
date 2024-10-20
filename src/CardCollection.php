@@ -221,17 +221,17 @@ abstract class CardCollection implements \Iterator, \Countable
         return $this->remaining_cards[0];
     }
 
-    public function key()
+    public function key() : int
     {
         return count($this->drawn_cards);
     }
 
-    public function next()
+    public function next() : void
     {
         $this->draw();
     }
 
-    public function rewind()
+    public function rewind() : void
     {
         $this->remaining_cards = [...$this->drawn_cards, ...$this->remaining_cards];
         $this->flushDraws();
